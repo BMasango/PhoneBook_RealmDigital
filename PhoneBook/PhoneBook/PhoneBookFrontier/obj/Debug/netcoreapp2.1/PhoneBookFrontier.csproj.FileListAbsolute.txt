@@ -1,0 +1,13 @@
+C:\Users\BMasango\Documents\Visual Studio 2017\Projects\PhoneBook\PhoneBook\PhoneBookFrontier\bin\Debug\netcoreapp2.1\PhoneBookFrontier.deps.json
+C:\Users\BMasango\Documents\Visual Studio 2017\Projects\PhoneBook\PhoneBook\PhoneBookFrontier\bin\Debug\netcoreapp2.1\PhoneBookFrontier.runtimeconfig.json
+C:\Users\BMasango\Documents\Visual Studio 2017\Projects\PhoneBook\PhoneBook\PhoneBookFrontier\bin\Debug\netcoreapp2.1\PhoneBookFrontier.runtimeconfig.dev.json
+C:\Users\BMasango\Documents\Visual Studio 2017\Projects\PhoneBook\PhoneBook\PhoneBookFrontier\bin\Debug\netcoreapp2.1\PhoneBookFrontier.dll
+C:\Users\BMasango\Documents\Visual Studio 2017\Projects\PhoneBook\PhoneBook\PhoneBookFrontier\bin\Debug\netcoreapp2.1\PhoneBookFrontier.pdb
+C:\Users\BMasango\Documents\Visual Studio 2017\Projects\PhoneBook\PhoneBook\PhoneBookFrontier\obj\Debug\netcoreapp2.1\PhoneBookFrontier.csproj.CoreCompileInputs.cache
+C:\Users\BMasango\Documents\Visual Studio 2017\Projects\PhoneBook\PhoneBook\PhoneBookFrontier\obj\Debug\netcoreapp2.1\PhoneBookFrontier.RazorAssemblyInfo.cache
+C:\Users\BMasango\Documents\Visual Studio 2017\Projects\PhoneBook\PhoneBook\PhoneBookFrontier\obj\Debug\netcoreapp2.1\PhoneBookFrontier.RazorAssemblyInfo.cs
+C:\Users\BMasango\Documents\Visual Studio 2017\Projects\PhoneBook\PhoneBook\PhoneBookFrontier\obj\Debug\netcoreapp2.1\PhoneBookFrontier.AssemblyInfoInputs.cache
+C:\Users\BMasango\Documents\Visual Studio 2017\Projects\PhoneBook\PhoneBook\PhoneBookFrontier\obj\Debug\netcoreapp2.1\PhoneBookFrontier.AssemblyInfo.cs
+C:\Users\BMasango\Documents\Visual Studio 2017\Projects\PhoneBook\PhoneBook\PhoneBookFrontier\obj\Debug\netcoreapp2.1\PhoneBookFrontier.RazorTargetAssemblyInfo.cache
+C:\Users\BMasango\Documents\Visual Studio 2017\Projects\PhoneBook\PhoneBook\PhoneBookFrontier\obj\Debug\netcoreapp2.1\PhoneBookFrontier.dll
+C:\Users\BMasango\Documents\Visual Studio 2017\Projects\PhoneBook\PhoneBook\PhoneBookFrontier\obj\Debug\netcoreapp2.1\PhoneBookFrontier.pdb

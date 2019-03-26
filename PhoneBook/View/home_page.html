@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<link href="font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+<body>
+	<h1>Phone Book </h1>
+	<input id="search" placeholder="&#xF002; Search">
+	<button onclick="editUser({'firstName': '', 'lastName': '', 'dialUpContacts': []}); isNewContact=true; addNewContact();"><i class="fas fa-user-plus"></i></button>
+	<br/>
+	<div style="float: left; padding: 20px">
+		<div id="div1"></div>
+	</div>
+	<div style="float: left; padding: 20px">
+		<div id="div2" style="display: flex;">
+			<div id="titles" style="line-height: 2.4;padding-right: 27px;"></div>
+			<div id="objValues" style="float: right;"></div>
+		</div>
+		<div id="div3"></div>
+		<div id="div4"></div>
+	</div>
+</body>
+</html>
+
+<style>
+	input, button {
+	  padding:10px;
+		font-family: FontAwesome, "Open Sans", Verdana, sans-serif;
+		font-style: normal;
+		font-weight: normal;
+		text-decoration: inherit;
+	}
+	
+	.editInput{
+		border: 0;
+		outline: 0;
+		background: transparent;
+		border-bottom: 1px solid black;
+	}
+	
+	.row{
+		line-height: 3;
+	}
+</style>
+
+<script>
+    var hasNewContact = null;
+	var newCount = 0;
+	var isNewContact = false;
+	var allContacts;
+	
+    $(document).ready(function () {
+		var request = $.ajax({
+		  url: "http://localhost:50371/Contacts/GetAllContactDetails",
+		  type: "GET",
+		  dataType: "json"
+		});
+
+		request.done(function(obj) {
+			allContacts = obj;
+			displayResult(obj)
+		});
+    });
+	
+	$("#search").on('input', function(){
+		var searchItems = [];
+		var searchString = $("#search").val().toLowerCase();
+		if(searchString !== ""){
+			$.each(allContacts, function(key, value){
+				if(value.firstName.toLowerCase().indexOf(searchString) > -1 || value.lastName.toLowerCase().indexOf(searchString) > -1){
+					searchItems.push(value);
+				}
+			});
+		}
+		
+		if(searchItems.length > 0){
+			displayResult(searchItems);
+		}
+		else if(searchString !== ""){
+			$("#div1").html("");
+			$("#titles").html("");
+			$("#objValues").html("");
+			$("#div3").html("");
+			$("#div4").html("");		
+			
+			$("#div1").append("No results found");
+		}
+		else{
+			displayResult(allContacts);
+		}
+	});
+	
+	function displayResult(obj){
+		$("#div1").html("");
+		$("#titles").html("");
+		$("#objValues").html("");
+		$("#div3").html("");
+		$("#div4").html("");
+		for (k = 0; k < obj.length; k++) {
+			$("#div1").append("<p style='' onclick='editUser(" + JSON.stringify(obj[k]) + ")'>" + obj[k].displayName + "</p>");
+		}
+	}
+	
+	function editUser(obj) {
+		$("#titles").html("");
+		$("#titles").append("<span>Last Name<span><br/>");
+		$("#titles").append("<span>First Name<span><br/>");
+		$("#titles").append("<span>Phone<span><br/>");
+		$("#objValues").html("");
+		$("#objValues").append("<input class='editInput' value='"+obj.lastName+"' id='selectedln' placeholder='Last Name'/><br/>");
+		$("#objValues").append("<input class='editInput' value='"+obj.firstName+"' id='selectedfn' placeholder='First Name'/><br/>");
+		$("#objValues").append("<button class='fas fa-plus' onclick='addNewContact()' style='margin-top: 2px; float:right;'></button><br/>");
+		$("#div3").html("");
+		
+		for ( k = 0; k < obj.dialUpContacts.length; k++) {
+			$("#div3").append("<div class='row'><input class='editInput' value='"+obj.dialUpContacts[k].contact+"' id='dialup"+obj.dialUpContacts[k].id+"'/><button style='float:right;' id='removeTel"+obj.dialUpContacts[k].id+"' onclick='removeContact("+ JSON.stringify(obj.dialUpContacts[k]) +")'><i class='fas fa-user-times'></i></button></div>");
+		}
+		
+		$("#div4").html("");
+		$("#div4").append("<button style='margin: 10px;float:right;' onclick='updateContactDetail("+ JSON.stringify(obj) +")'><i class='fas fa-save'></i>&nbsp;Save</button>");
+	}
+	
+	function updateContactDetail(contact){
+		contact.lastName = $("#selectedln").val();
+		contact.firstName = $("#selectedfn").val();
+		$.each(contact.dialUpContacts, function(key, value){
+			value.contact = $("#dialup"+ value.id).val();
+		});
+		
+		var newElements = [];
+		if(hasNewContact){
+			$('[id^="newTel"]').each(function(){
+				newElements.push({'contact': $(this).val(), 'contactDetailId': contact.id});
+			});
+		}
+		
+		if(isNewContact){
+			contact.dialUpContacts = newElements;
+			$.ajax({
+			  url: "http://localhost:50371/Contacts/AddContactDetials",
+			  type: "POST",
+			  data: {contact : contact},
+			  dataType: "json",
+			  success: function(){
+				
+			  }
+			});
+		}
+		else{
+			$.ajax({
+			  url: "http://localhost:50371/Contacts/UpdateContactDetails",
+			  type: "POST",
+			  data: {contact : contact},
+			  dataType: "json",
+			  success: function(){
+				
+			  }
+			});
+			
+			if(hasNewContact){
+				$.ajax({
+				  url: "http://localhost:50371/DialUp/AddNewDialUpContact",
+				  type: "POST",
+				  data: {dialUpContact : newElements},
+				  dataType: "json",
+				  success: function(){
+					
+				  }
+				});
+			}
+		}
+		
+		location.reload();
+	}
+	
+	function removeContact(dialup){
+		$.ajax({
+		  url: "http://localhost:50371/DialUp/DeleteDialUpContact",
+		  type: "POST",
+		  data: {dialUpContact : dialup},
+		  dataType: "json",
+		  success: function(){
+			
+		  }
+		});
+		
+		$("#dialup"+dialup.id).remove();
+		$("#removeTel"+dialup.id).remove();
+	}
+	
+	function addNewContact(){
+		newCount = newCount + 1;
+		$("#div3").append("<div class='row'><input class='editInput' placeholder='phone' id='newTel'+newCount /></div>");
+		hasNewContact = true;
+	}
+</script>
